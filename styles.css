@@ -1,7 +1,20 @@
+/* Yleiset tyylit */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #f0f8ff;
+    background-image: url("images/taustakuva.jpg");
+    background-size: cover;
+    background-position: center 20%; /* Siirtää taustakuvaa 20% alaspäin */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #444;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
 h1 {
@@ -13,21 +26,27 @@ p {
     font-size: 1.2em;
 }
 
+/* Pelialue ja kuva */
 #dog-container {
-    position: relative;
-    display: inline-block;
-    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #dog {
     width: 200px;
+    height: 200px;
+    border-radius: 50%; /* Muuttaa kuvan pyöreäksi */
+    border: 5px solid black; /* Lisää mustan reunuksen */
     cursor: pointer;
     transition: transform 0.3s ease;
 }
 
 #dog.jump {
-    transform: translateY(-50px);
+    transform: translateY(-20px); /* Nosta kuvaa ylöspäin klikatessa */
 }
+
+/* Piste-popup tyyli */
 .score-popup {
     position: absolute;
     font-size: 1.5em;
@@ -36,4 +55,90 @@ p {
     opacity: 1;
     transition: opacity 1s ease;
     pointer-events: none; /* Estää popupia vaikuttamasta klikkauksiin */
+}
+svg {
+    position: absolute;
+    top: 50px; /* Säädä yläreunan etäisyyttä tarpeen mukaan */
+    width: 100%;
+}
+
+text {
+    font-size: 2.5em;
+    fill: #444; /* Otsikon väri */
+    font-family: Arial, sans-serif;
+}
+/* Pisteiden näyttö */
+#score {
+    font-size: 2em; /* Suurentaa fonttia */
+    font-weight: bold;
+    color: #ffffff; /* Tekstin väri */
+}
+
+p {
+    background-color: #007bff; /* Sininen taustaväri */
+    color: #ffffff; /* Tekstin väri */
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: inline-block;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+#score {
+    font-size: 2em; /* Suurentaa pistemäärän fonttia */
+    font-weight: bold;
+    color: #ffffff; /* Pistemäärän väri */
+}
+
+p::before {
+    content: "Pisteet: ";
+    font-size: 1.5em; /* Suurentaa "Pisteet:" tekstin fonttia */
+}
+#explosion {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,69,0,1) 0%, rgba(255,140,0,0.8) 50%, rgba(255,215,0,0) 100%);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none; /* Estää klikkauksen vaikutuksen */
+    transition: opacity 0.3s ease;
+}
+
+.explode {
+    animation: explode 0.5s forwards;
+}
+
+@keyframes explode {
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(2); }
+}
+/* Oikean reunan sivupalkki */
+.sidebar {
+    position: fixed;
+    top: 20%;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Napit sivupalkissa */
+.button {
+    background-color: #007bff; /* Sama sininen väri kuin pisteissä */
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0056b3; /* Tummentaa väriä hoverilla */
 }
