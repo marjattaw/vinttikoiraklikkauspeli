@@ -4,7 +4,7 @@ body {
     text-align: center;
     background-image: url("images/taustakuva.jpg");
     background-size: cover;
-    background-position: center 20%; /* Siirtää taustakuvaa 20% alaspäin */
+    background-position: center 20%;
     background-repeat: no-repeat;
     background-attachment: fixed;
     color: #444;
@@ -36,14 +36,14 @@ p {
 #dog {
     width: 200px;
     height: 200px;
-    border-radius: 50%; /* Muuttaa kuvan pyöreäksi */
-    border: 5px solid black; /* Lisää mustan reunuksen */
+    border-radius: 50%;
+    border: 5px solid black;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
 
 #dog.jump {
-    transform: translateY(-20px); /* Nosta kuvaa ylöspäin klikatessa */
+    transform: translateY(-20px);
 }
 
 /* Piste-popup tyyli */
@@ -54,29 +54,31 @@ p {
     color: #ff6347;
     opacity: 1;
     transition: opacity 1s ease;
-    pointer-events: none; /* Estää popupia vaikuttamasta klikkauksiin */
+    pointer-events: none;
 }
+
 svg {
     position: absolute;
-    top: 50px; /* Säädä yläreunan etäisyyttä tarpeen mukaan */
+    top: 50px;
     width: 100%;
 }
 
 text {
     font-size: 2.5em;
-    fill: #444; /* Otsikon väri */
+    fill: #444;
     font-family: Arial, sans-serif;
 }
+
 /* Pisteiden näyttö */
 #score {
-    font-size: 2em; /* Suurentaa fonttia */
+    font-size: 2em;
     font-weight: bold;
-    color: #ffffff; /* Tekstin väri */
+    color: #ffffff;
 }
 
 p {
-    background-color: #007bff; /* Sininen taustaväri */
-    color: #ffffff; /* Tekstin väri */
+    background-color: #007bff;
+    color: #ffffff;
     padding: 10px 20px;
     border-radius: 8px;
     display: inline-block;
@@ -85,15 +87,16 @@ p {
 }
 
 #score {
-    font-size: 2em; /* Suurentaa pistemäärän fonttia */
+    font-size: 2em;
     font-weight: bold;
-    color: #ffffff; /* Pistemäärän väri */
+    color: #ffffff;
 }
 
 p::before {
     content: "Pisteet: ";
-    font-size: 1.5em; /* Suurentaa "Pisteet:" tekstin fonttia */
+    font-size: 1.5em;
 }
+
 #explosion {
     position: fixed;
     top: 50%;
@@ -104,7 +107,7 @@ p::before {
     background: radial-gradient(circle, rgba(255,69,0,1) 0%, rgba(255,140,0,0.8) 50%, rgba(255,215,0,0) 100%);
     border-radius: 50%;
     opacity: 0;
-    pointer-events: none; /* Estää klikkauksen vaikutuksen */
+    pointer-events: none;
     transition: opacity 0.3s ease;
 }
 
@@ -116,6 +119,15 @@ p::before {
     0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     100% { opacity: 0; transform: translate(-50%, -50%) scale(2); }
 }
+
+@keyframes floatAround {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(15vw, -10vh); }
+    50% { transform: translate(-10vw, 15vh); }
+    75% { transform: translate(10vw, 10vh); }
+    100% { transform: translate(0, 0); }
+}
+
 /* Oikean reunan sivupalkki */
 .sidebar {
     position: fixed;
@@ -128,7 +140,7 @@ p::before {
 
 /* Napit sivupalkissa */
 .button {
-    background-color: #007bff; /* Sama sininen väri kuin pisteissä */
+    background-color: #007bff;
     color: #ffffff;
     padding: 10px 20px;
     border-radius: 8px;
@@ -140,5 +152,27 @@ p::before {
 }
 
 .button:hover {
-    background-color: #0056b3; /* Tummentaa väriä hoverilla */
+    background-color: #0056b3;
+}
+
+/* Leijuvan nakin tyyli */
+#sausage {
+    position: absolute;
+    width: 50px;
+    height: auto;
+    animation: floatAround 8s ease-in-out infinite alternate;
+    cursor: pointer;
+}
+
+/* Jokaisen leijuvan nakin tyyli */
+.floating-sausage {
+    position: absolute;
+    width: 50px;
+    height: auto;
+    animation: floatAround 8s ease-in-out infinite alternate;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
 }
