@@ -39,11 +39,18 @@ p {
     border-radius: 50%;
     border: 5px solid black;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease; /* Lisää tämä, jos se puuttuu */
+    animation: idleMove 3s ease-in-out infinite; /* Idle-animaatio */
 }
 
 #dog.jump {
-    transform: translateY(-20px);
+    transform: translateY(-20px); /* Siirretään koiraa ylöspäin */
+    transition: transform 0.3s ease; /* Animaatioefekti */
+}
+
+@keyframes idleMove {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 /* Piste-popup tyyli */
@@ -115,6 +122,16 @@ p::before {
     animation: explode 0.5s forwards;
 }
 
+.clicks-per-second {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007bff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
 @keyframes explode {
     0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     100% { opacity: 0; transform: translate(-50%, -50%) scale(2); }
@@ -128,25 +145,14 @@ p::before {
     100% { transform: translate(0, 0); }
 }
 
-/* Oikean reunan sivupalkki */
-.sidebar {
-    position: fixed;
-    top: 20%;
-    right: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
 /* Napit sivupalkissa */
 .button {
+    position: relative;
+    text-align: center;
+    padding: 10px 20px;
     background-color: #007bff;
     color: #ffffff;
-    padding: 10px 20px;
     border-radius: 8px;
-    font-size: 1.2em;
-    font-weight: bold;
-    text-align: center;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
@@ -155,6 +161,19 @@ p::before {
     background-color: #0056b3;
 }
 
+.button .price {
+    font-size: 0.8em;
+    color: #d9d9d9; /* Vaaleampi teksti */
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: fixed;
+    right: 20px;
+    top: 20%;
+}
 /* Leijuvan nakin tyyli */
 #sausage {
     position: absolute;
@@ -162,6 +181,24 @@ p::before {
     height: auto;
     animation: floatAround 8s ease-in-out infinite alternate;
     cursor: pointer;
+}
+.wild-sausage {
+    width: 50px;
+    height: auto;
+    cursor: pointer;
+    animation: floatAround 2s infinite alternate ease-in-out;
+}
+
+@keyframes floatAround {
+    0% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(10px, -10px);
+    }
+    100% {
+        transform: translate(-10px, 10px);
+    }
 }
 
 /* Jokaisen leijuvan nakin tyyli */
@@ -176,3 +213,124 @@ p::before {
 .hidden {
     display: none;
 }
+
+@media (max-width: 768px) {
+    .sidebar {
+        top: auto;
+        bottom: 20px;
+        right: 50%;
+        transform: translateX(50%);
+        flex-direction: row;
+        gap: 5px;
+    }
+
+    .button {
+        font-size: 1em;
+        padding: 8px 10px;
+    }
+
+    #dog {
+        width: 150px; /* Pienennä koiran kuvaa pienemmillä näytöillä */
+        height: 150px;
+    }
+
+    p {
+        font-size: 1em; /* Pienennä pisteiden fonttikokoa */
+    }
+    @media (max-width: 480px) {
+        #dog {
+            width: 100px;
+            height: 100px;
+        }
+    
+        .button {
+            font-size: 0.8em;
+            padding: 5px 8px;
+        }
+    }
+
+}
+
+.button.purchased {
+    background-color: #28a745; /* Vihreä */
+    cursor: not-allowed;
+    pointer-events: none; /* Estää lisäklikkaukset */
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 60%;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.modal-content h2 {
+    color: #FFFFFF;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.modal-content p {
+    color: #FFFFFF;
+    font-size: 18px;
+    margin: 10px 0;
+}
+.modal-content p::before {
+    content: none;
+
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: -10px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #333;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.mad-enzio-active {
+    animation: madEnzioEffect 1.5s infinite alternate;
+}
+
+@keyframes madEnzioEffect {
+    0% {
+        background-color: rgba(255, 0, 0, 0.1);
+    }
+    100% {
+        background-color: rgba(255, 0, 0, 0.6);
+    }
+}
+

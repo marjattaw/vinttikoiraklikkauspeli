@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1></h1>
+    <div class="clicks-per-second">
+        Klikkauksia sekunnissa: <span id="clicks-per-second">0</span>
+    </div>
     <p><span id="score">0</span></p>
 
     <!-- Keskellä oleva kuva -->
@@ -23,14 +25,53 @@
         <img src="images/sausage.jpg" alt="Nakki">
     </div>
 
-    <!-- Oikean reunan napit -->
     <div class="sidebar">
-        <div class="button">Automaattikursori (500 klikkausta)</div>
-        <div class="button">Energianamit (10000 klikkausta)</div>
-        <div class="button">Tähän jotain</div>
-        <div class="button">Tähän jotain</div>
-        <div class="button">Tähän jotain</div>
-        <div class="button reset-button">Nollaa pisteet</div>
+        <!-- Ostettavat napit -->
+        <div class="button" id="auto-cursor">
+            <span>Automaattikursori</span>
+            <span class="price">200 klikkausta</span>
+        </div>
+        <div class="button" id="super-cursor">
+            <span>Superautomaattikursori</span>
+            <span class="price">500 klikkausta</span>
+        </div>
+        <div class="button" id="energy-treat">
+            <span>Energianamit</span>
+            <span class="price">10000 klikkausta</span>
+        </div>
+        <div class="button" id="rage-enzio">
+            <span>Rage Enzio</span>
+            <span class="price">100 klikkausta</span>
+        </div>
+        <div class="button" id="mad-enzio">
+            <span>Mad Enzio</span>
+            <span class="price">200 klikkausta</span>
+        </div>
+        <div class="button" id="maxispeed-enzio">
+            <span>Maxispeed Enzio</span>
+            <span class="price">300 klikkausta</span>
+        </div>
+    
+        <!-- Reset- ja Säännöt-napit -->
+        <div class="rules-reset">
+            <button class="button reset-button" id="reset-button">Reset</button>
+            <button class="button rules-button" id="rules-button">Säännöt</button>
+        </div>
+    </div>
+    
+    <!-- Sääntöjen modal-ikkuna -->
+    <div id="rules-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Peliohjeet</h2>
+            <p>1. Klikkaa pääelementtinä toimivaa Enziota kerätäksesi klikkauksia.</p>
+            <p>2. Käytä klikkauksia ostoksien tekemiseen sivupalkista.</p>
+            <p>3. "Automaattikursori" kerää klikkauksia puolestasi ajan myötä.</p>
+            <p>4. "Superautomaattikursori" on nopeampi versio automaattikursorista.</p>
+            <p>5. Energianamit ja Enzion päivitykset lisäävät tehokkuutta.</p>
+            <p>6. Tavoitteena on kerätä mahdollisimman paljon klikkauksia ja päivityksiä.</p>
+            <p>7. Voit nollata pelin painamalla Reset-nappia.</p>
+        </div>
     </div>
 
     <script src="script.js"></script>
