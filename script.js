@@ -110,20 +110,6 @@ superCursorButton.addEventListener("click", () => {
     }
 });
 
-// Nollaa pisteet -painikkeen tapahtumankäsittelijä
-resetButton.addEventListener("click", () => {
-    score = 0;
-    autoCursorCount = 0;
-    superCursorCount = 0;
-    clearInterval(autoClickInterval);
-    autoClickInterval = null; // Nollaa intervalli
-    scoreDisplay.textContent = score;
-    clicksPerSecondDisplay.textContent = "0.00"; // Resetoi tarkkuudella
-    localStorage.removeItem('score');
-    localStorage.removeItem('autoCursorCount');
-    localStorage.removeItem('superCursorCount');
-});
-
 // Käynnistää superautomaattikursorin toiminnan
 function startSuperCursor() {
     if (!autoClickInterval) {
@@ -167,56 +153,6 @@ function activateEnergyTreat() {
     }, 30000); // 30 sekuntia
 }
 
-madEnzioButton.addEventListener("click", () => {
-    const madEnzioCost = 200; // Hinta Mad Enziolle
-    if (score >= madEnzioCost) {
-        score -= madEnzioCost; // Vähennä pisteitä
-        scoreDisplay.textContent = score;
-        localStorage.setItem('score', score);
-
-        activateMadEnzio(); // Aktivoi Mad Enzion toiminnallisuus
-    } else {
-        alert("Sinulla ei ole tarpeeksi pisteitä Mad Enzion ostamiseen!");
-    }
-});
-
-// Mad Enzion toiminnallisuus
-function activateMadEnzio() {
-    if (energyTreatActive) {
-        alert("Mad Enzio on jo aktiivinen!");
-        console.log("Mad Enzio yritettiin aktivoida uudelleen, mutta se on jo aktiivinen.");
-        return;
-    }
-
-    console.log("Mad Enzio aktivoidaan!"); // Debugging-loki
-
-    energyTreatActive = true;
-
-    // Tehostettu pisteiden lisäys
-    const originalAddScore = addScore;
-    addScore = function (playSound, extraPoints = 0) {
-        console.log(`Mad Enzio lisäsi +3 pisteen boostin. ExtraPoints: ${extraPoints}`); // Debugging-loki
-        originalAddScore(playSound, extraPoints + 3); // Lisää 3 ylimääräistä pistettä jokaiseen klikkaukseen
-    };
-
-    // Lisää luokka visuaaliselle tehosteelle
-    const body = document.querySelector("body"); // Varmista oikea viittaus body-elementtiin
-    body.classList.add("mad-enzio-active");
-    
-    console.log("Mad Enzion visuaalinen tehoste lisätty (luokka: mad-enzio-active)."); // Debugging-loki
-
-    // Tarkista, onko luokka todella lisätty
-    console.log("Onko mad-enzio-active lisätty? ", body.classList.contains("mad-enzio-active")); // Tulostaa true/false
-
-    // Poista tehostettu tila 30 sekunnin jälkeen
-    setTimeout(() => {
-        addScore = originalAddScore; // Palauta normaali pisteiden lisäys
-        energyTreatActive = false;
-        body.classList.remove("mad-enzio-active");
-        console.log("Mad Enzion tila loppui ja visuaalinen tehoste poistettiin."); // Debugging-loki
-    }, 30000); // Kesto: 30 sekuntia
-}
-
 // Rage Enzion toiminnallisuus: Villien nakkien hyökkäys
 rageEnzioButton.addEventListener("click", () => {
     const rageEnzioCost = 100;
@@ -231,12 +167,14 @@ rageEnzioButton.addEventListener("click", () => {
         alert("Sinulla ei ole tarpeeksi pisteitä Rage Enzion ostamiseen!");
     }
 });
-
-// Villien nakkien hyökkäyksen logiikka
 function activateWildSausages() {
+    const body = document.querySelector("body");
     const totalSausages = 20; // Kuinka monta nakkia luodaan
     const duration = 10000; // 10 sekuntia
     const sausages = [];
+
+    body.classList.add("rage-active"); // Vaihda taustakuva
+    console.log("Rage Enzio aktivoitu!");
 
     // Luo nakit ja lisää ne näytölle
     for (let i = 0; i < totalSausages; i++) {
@@ -259,39 +197,61 @@ function activateWildSausages() {
         sausages.push(sausage);
     }
 
-    // Poista kaikki nakit, kun aika loppuu
+    // Poista kaikki nakit ja palauta tausta, kun aika loppuu
     setTimeout(() => {
         sausages.forEach((sausage) => sausage.remove());
+        body.classList.remove("rage-active");
+        console.log("Rage Enzion tila päättyi!");
     }, duration);
 }
 
-// Funktio saussien satunnaiselle sijainnille
-function randomizeSausagePosition(element) {
-    const randomX = Math.random() * (window.innerWidth - 50); // Leveys, pois reunoilta
-    const randomY = Math.random() * (window.innerHeight - 50); // Korkeus, pois reunoilta
-    element.style.position = "absolute";
-    element.style.left = `${randomX}px`;
-    element.style.top = `${randomY}px`;
+// Mad Enzion toiminnallisuus
+madEnzioButton.addEventListener("click", () => {
+    const madEnzioCost = 200;
+
+    if (score >= madEnzioCost) {
+        score -= madEnzioCost;
+        scoreDisplay.textContent = score;
+        localStorage.setItem('score', score);
+
+        activateMadEnzio(); // Käynnistä Mad Enzion toiminnallisuus
+    } else {
+        alert("Sinulla ei ole tarpeeksi pisteitä Mad Enzion ostamiseen!");
+    }
+});
+
+function activateMadEnzio() {
+    const body = document.querySelector("body");
+
+    console.log("Mad Enzio aktivoitu!");
+    body.classList.add("mad-active"); // Vaihda taustakuva
+
+    setTimeout(() => {
+        body.classList.remove("mad-active");
+        console.log("Mad Enzion tila päättyi!");
+    }, 30000); // 30 sekuntia
 }
 
 // Maxispeed Enzion toiminnallisuus
 maxispeedEnzioButton.addEventListener("click", () => {
-    const maxispeedCost = 300; // Hinta Maxispeed Enziolle
+    const maxispeedCost = 300;
+
     if (score >= maxispeedCost) {
-        score -= maxispeedCost; // Vähennetään pisteitä
+        score -= maxispeedCost;
         scoreDisplay.textContent = score;
         localStorage.setItem('score', score);
 
-        activateMaxispeedEnzio(); // Aktivoi Maxispeed Enzion toiminnallisuus
+        activateMaxispeedEnzio(); // Käynnistä Maxispeed Enzion toiminnallisuus
     } else {
         alert("Sinulla ei ole tarpeeksi pisteitä Maxispeed Enzion ostamiseen!");
     }
 });
 
 function activateMaxispeedEnzio() {
-    console.log("Maxispeed Enzio aktivoitu! Kaikki pisteet tuplataan 20 sekunniksi!");
     const body = document.querySelector("body");
-    body.classList.add("maxispeed-active"); // Visuaalinen tehoste
+
+    console.log("Maxispeed Enzio aktivoitu!");
+    body.classList.add("maxispeed-active"); // Vaihda taustakuva
 
     const originalAddScore = addScore; // Tallenna alkuperäinen pisteidenlisäysfunktio
 
@@ -306,6 +266,15 @@ function activateMaxispeedEnzio() {
         body.classList.remove("maxispeed-active"); // Poistetaan visuaalinen tehoste
         console.log("Maxispeed Enzio tehoste päättyi!");
     }, 20000); // 20 sekuntia
+}
+
+// Funktio saussien satunnaiselle sijainnille
+function randomizeSausagePosition(element) {
+    const randomX = Math.random() * (window.innerWidth - 50); // Leveys, pois reunoilta
+    const randomY = Math.random() * (window.innerHeight - 50); // Korkeus, pois reunoilta
+    element.style.position = "absolute";
+    element.style.left = `${randomX}px`;
+    element.style.top = `${randomY}px`;
 }
 
 // Pisteiden lisääminen ja pomppuanimaatio, kun kuvaa klikataan

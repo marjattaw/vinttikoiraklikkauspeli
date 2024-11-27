@@ -15,6 +15,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
+    transition: background-image 1.5s ease-in-out; /* Sulava siirtymä taustakuvien välillä */
 }
 
 h1 {
@@ -334,3 +335,17 @@ p::before {
     }
 }
 
+/* Rage Enzion taustakuva */
+body.rage-active {
+    background-image: url("images/rageenziobackground.jpg");
+}
+
+/* Mad Enzion taustakuva */
+body.mad-active {
+    background-image: url("images/madenziobackground.jpg");
+}
+
+/* Maxispeed Enzion taustakuva */
+body.maxispeed-active {
+    background-image: url("images/maxspeedenziobackground.jpg");
+}
